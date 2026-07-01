@@ -28,6 +28,7 @@ reference shelf (`local/refs/`). The subsection files are the elaboration units.
 | Section | Subject | Status |
 |---|---|---|
 | `00-overview` | Thesis; two engines; guarantee levels; scope | DRAFT v0 (scaffold) |
+| `01-architecture` | The Ward stack: two siblings (Ward + Keep) | **DECISION SET** (`OQ-ward-stack`; ADR 0002) |
 | `10-seam/11-export-consumer` | Consuming the export IR | DRAFT v0 (anchored to ken B1) |
 | `10-seam/12-discharge-attestation` | Discharge attestation | **RATIFIED** by ken (schema + Ken contract; §13 CT method open) |
 | `10-seam/13-ct-runtime` | Runtime CT validation | **DESIGN SET** (3 mechanisms + assurance policy; `OQ-ct-assurance` residue) |

@@ -6,12 +6,13 @@
 ## Thesis
 
 Ken proves a **closed, deterministic, total, static** world propositionally. The
-behaviors that escape that net — time and ordering, concurrency and distribution,
-the assumed environment, nondeterminism, and agentic outputs with no
-propositional oracle — are not foreign to Ken: the world of behaviors-over-time
-is itself a topos (Schultz–Spivak, *Temporal Type Theory* — behavior types are
-sheaves over time). Ward occupies the **temporal/modal** fragment of the same
-topos-internal logic that Ken occupies the **static/propositional** fragment of.
+behaviors that escape that net — time and ordering, concurrency and
+distribution, the assumed environment, nondeterminism, and agentic outputs with
+no propositional oracle — are not foreign to Ken: the world of
+behaviors-over-time is itself a topos (Schultz–Spivak, *Temporal Type Theory* —
+behavior types are sheaves over time). Ward occupies the **temporal/modal**
+fragment of the same topos-internal logic that Ken occupies the
+**static/propositional** fragment of.
 
 **One logic, two engines** (Ken ADR 0006). A property means the same thing on
 both sides; it is written once, in Ken, and Ward discharges the half Ken
@@ -54,7 +55,9 @@ soundness *and* a legibility commitment.
 - **In scope:** consuming the Ken export; the `τ` translation and its
   faithfulness; the L1/L2/L3 engines; the discharge attestation and runtime CT
   validation Ken defers to Ward; the sampling policy.
-- **Not in scope:** changing Ken's kernel or re-importing classical strength into
-  it; specifying Ken's *half* of the seam (that is ken `spec/70-behavioral/`).
-  Ward's implementation stack is a **design output**, decided in the campaign,
-  not assumed here.
+- **Not in scope:** changing Ken's kernel or re-importing classical strength
+  into it; specifying Ken's *half* of the seam (that is ken
+  `spec/70-behavioral/`). Ward's implementation stack was a **design output**,
+  now decided in §01 (`OQ-ward-stack`): **two siblings** — Ward (offline
+  discharge: L1+L2) and **Keep** (runtime: L3) — over a shared seam crate, on a
+  Rust substrate.

@@ -8,6 +8,7 @@ normative target; exploratory work lives in `../docs/design/`, decisions in
 | Section | Subject |
 |---|---|
 | [`00-overview.md`](00-overview.md) | Thesis; one logic, two engines; guarantee levels; scope. |
+| [`01-architecture.md`](01-architecture.md) | **The Ward stack** — two siblings (Ward + Keep), the shared seam crate, Rust substrate, orchestrator posture. Resolves `OQ-ward-stack`. |
 | [`10-seam/`](10-seam/) | **The Ken interface** — the assumption-boundary export Ward consumes, the discharge attestation, the runtime CT validation. The fixed input. |
 | [`20-translation/`](20-translation/) | `τ`: `compile : Temporal Σ → WardFormula`, model translation, faithfulness. |
 | [`30-model-checking/`](30-model-checking/) | **L1** — model checking (Quint / Apalache): check `T` against `Q`/`P`. |

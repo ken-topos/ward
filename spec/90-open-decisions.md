@@ -15,7 +15,8 @@
 
 | OQ | Question | Where |
 |---|---|---|
-| `OQ-ward-stack` | Ward's implementation stack + top-level architecture. | §00 / campaign |
+| `OQ-ward-stack` | **RESOLVED** (§01, ADR 0002): two siblings (Ward + Keep), shared seam crate, Rust, orchestrator core. | §01 |
+| `OQ-deployment-seam` | The `(Ken+Ward)↔deployment` seam: discharge predicate schema + reference admission policy (gate is Ken's). | §01 |
 | `OQ-wardformula` | The `WardFormula` target + the `compile` image. | §20 / §21 |
 | `OQ-model-target` | The model-translation target (Quint module / Apalache TLA+ / IR). | §22 / §30 |
 | `OQ-export-wire` | Finalize the export field wire spellings, back-coordinated to ken. | §11 |
@@ -89,3 +90,30 @@ field), gate-visible pin as fallback. **Honesty:** statistical/hw →
 `discharged`, always relative to leakage model `L` + platform `P`; a bare "CT:
 pass" is forbidden; never promoted to `Q`. **Open (residue):** each mechanism's
 tractability, the platform-pin choice, and the ken-side codegen coordination.
+
+**RESOLVED (2026-07-01, operator) — `OQ-ward-stack` (§01, ADR 0002).** **Two
+sibling tools split by operational context:** **Ward** = offline/CI discharge
+(L1 model-checking, L2 test-generation, regression corpus, offline CT, and the
+attestation emit+sign); **Keep** = runtime/production (L3 monitors, trace
+conformance, runtime timing, agentic envelope). A shared **seam crate** carries
+the export consumer, `Σ`/ITF types, `τ`, the attestation library + obligation-id
+key, and the metamorphic surface. **Substrate: Rust** (self-hosting in Ken is
+the future north star; Rust is Ken's likely bootstrap regardless).
+**Orchestrator posture:** a **minimal trusted core** (orchestration +
+attestation + signing) over a polyglot toolbox run as **invoked, version-pinned
+processes** (never linked — also keeps copyleft tools out of the MIT core);
+orchestrated tools are **clean-room-replaceable**, not permanent deps. **Honest
+version transparency:** the attestation records each tool + version +
+reproducibility status and flags what cannot be reproduced. **Consequence:**
+§50/§53 and §13's runtime face are **Keep's**, to be migrated; Keep may later
+split to its own repo.
+
+**OPENED (2026-07-01) — `OQ-deployment-seam` (§01).** The third seam,
+`(Ken+Ward)↔deployment`. Signature-verification + admission-control tooling is
+mature (sigstore policy-controller, cosign `verify-attestation`, Kyverno,
+OPA/Gatekeeper, Binary Authorization) and — because §12 chose in-toto/sigstore —
+already carries Ward's attestation; what is missing is the
+**behavioral-discharge policy vocabulary**. Ward brings it: publish the
+discharge **predicate schema** + a **reference OPA/Rego (or Kyverno) policy** so
+existing controllers enforce the §12 gate (which is Ken's). Not a new checker —
+the research-to-industry gap is the semantics, not the mechanism.

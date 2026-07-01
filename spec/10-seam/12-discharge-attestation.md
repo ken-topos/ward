@@ -133,6 +133,11 @@ This is the hand-off. Everything else in the schema is Ward-internal.
      requirement** — the requirement (e.g. "external endpoints: no `bounded` on
      a `@ct` obligation") is **governance policy** (ken `64`/`65`), not Ward's;
      the gate reads the outcomes, the policy decides sufficiency.
+     - *CT obligations (`Q@ct`) carry an extra binding:* the verdict is valid
+       only for the platform it was measured on (§13). Recommended handling
+       folds platform into the build identity, so check (2) covers it and **no
+       Ken-visible field is added**; a gate-visible platform pin is the fallback
+       (a ratification delta, §13).
 - **Ken must NOT**: treat any `outcome` as promoting a `T` to `proved` (I4);
   depend on any Ward-internal field (`policy`, `bound`, `evidence`, `ct.method`,
   `regression`) for a correctness judgment; or assume a fifth outcome. The

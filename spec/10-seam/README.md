@@ -20,4 +20,6 @@ coupling is deliberately narrow (a broadcast contract, not an API) and **one-way
   version. **Schema + Ken contract RATIFIED** by ken (2026-07-01;
   `OQ-discharge-attestation`) — tokens pinned; only §13's CT method stays open.
 - [`13-ct-runtime.md`](13-ct-runtime.md) — the runtime constant-time validation
-  Ken's static `@ct` face defers to the "Ward runner." **Ward-designed.**
+  Ken's static `@ct` face defers to the "Ward runner." **Design set**
+  (`OQ-ct-assurance`): three mechanisms under a user assurance policy, CT-aware
+  codegen, strict outcome honesty.

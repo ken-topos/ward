@@ -8,7 +8,7 @@
 
 | OQ | Question | Where |
 |---|---|---|
-| `OQ-discharge-attestation` | Schema + Ken contract **RATIFIED** by ken (§12, see log); CT validation *method* still open. | §10 (`12`, `13`) |
+| `OQ-discharge-attestation` | Schema + Ken contract **RATIFIED** by ken (§12); CT-method residue spun to `OQ-ct-assurance`. | §10 (`12`) |
 | `OQ-sampling-policy` | The per-deployment test-sampling measure + its governance. | §40 |
 
 ## Ward-internal (opened by the campaign)
@@ -20,6 +20,7 @@
 | `OQ-model-target` | The model-translation target (Quint module / Apalache TLA+ / IR). | §22 / §30 |
 | `OQ-export-wire` | Finalize the export field wire spellings, back-coordinated to ken. | §11 |
 | `OQ-regression-corpus` | The pinned-witness corpus: identity keying, replay, staleness, governance. | §44 |
+| `OQ-ct-assurance` | The runtime-CT method: mechanism tractability, formal-tier scope, platform-pin, the CT assurance policy. | §13 |
 
 ## Ken-decided, realized in Ward (NOT open — do not reopen)
 
@@ -63,6 +64,26 @@ kept in a Ward-internal `bound` Ken does not read. **New ratified contract
 invariant (on Ward):** `obligations[].id` is stable over `Σ` across
 `export.hash` changes — Ken relies on it to match a discharge to its re-check;
 same key §44's regression corpus uses. Tokens now bound ⇒ rename is a breaking
-change (`OQ-export-wire` stability rule). **Still open under this OQ — the CT
-validation *method* (§13) only:** the attestation carries the `ct[]` verdict,
-but how it is produced is Ward-internal and unresolved.
+change (`OQ-export-wire` stability rule). The CT-method residue is now spun into
+`OQ-ct-assurance` (below); `OQ-discharge-attestation` is **fully resolved at the
+seam**.
+
+**DESIGN SET (2026-07-01, operator) — `OQ-ct-assurance` (§13), the CT-method
+residue, spun out of `OQ-discharge-attestation`.** Runtime CT validation
+supports **three mechanisms** — statistical (dudect-style), hardware-assisted,
+and formal/binary-level (Binsec/Rel, ct-verif class) — selected per obligation
+by a user-authored **CT assurance policy** (governed like §42's sampling policy;
+the **leakage model** is a recorded policy choice that bounds every claim's
+strength). **Formal-tier scope (recommended, pending ratification):** Ward does
+**not** build a verified CT-preserving compiler; it *does* enforce **CT-aware
+codegen** (a standing `OQ-ward-stack` constraint — lower `@ct` to branchless
+primitives, preserve CT-guaranteeing IR markers across passes) and may
+**consume** an external CT-preserving backend or a **sound binary-level CT
+verifier** to reach a `discharged` outcome. **Platform binding:** a CT verdict
+is platform-relative; recommended handling folds platform into the
+build/provenance identity (no Ken-visible field), gate-visible pin as fallback.
+**Honesty:** statistical/hw → `monitored`/`bounded` (never `discharged`); formal
+sound-for-`L` → possibly `discharged`, always relative to leakage model `L` +
+platform `P`; a bare "CT: pass" is forbidden; never promoted to `Q`. **Open
+(residue):** each mechanism's tractability, ratification of the formal-tier
+scope, and the platform-pin choice.

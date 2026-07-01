@@ -20,20 +20,34 @@ run by the Ward design federation (`agent/`).
 
 ## Outline & status
 
+Every section is now scaffolded to the §10 level of detail — a `> Status:`
+frame, the substance, the Ward design deliverables, and the resolver — enough
+for the design enclave to elaborate against the rest of the spec and the
+reference shelf (`local/refs/`). The subsection files are the elaboration units.
+
 | Section | Subject | Status |
 |---|---|---|
 | `00-overview` | Thesis; two engines; guarantee levels; scope | DRAFT v0 (scaffold) |
 | `10-seam/11-export-consumer` | Consuming the export IR | DRAFT v0 (anchored to ken B1) |
 | `10-seam/12-discharge-attestation` | Discharge attestation | DRAFT v0 (Ward-designed — open) |
 | `10-seam/13-ct-runtime` | Runtime CT validation | DRAFT v0 (Ward-designed — open) |
-| `20-translation` | `τ` + faithfulness | DRAFT v0 (open) |
-| `30-model-checking` | L1 | DRAFT v0 (open) |
-| `40-test-generation` | L2 + sampling policy | DRAFT v0 (open) |
-| `50-runtime-verification` | L3 + agentic envelope | DRAFT v0 (open) |
+| `20-translation/21-property-translation` | `compile → WardFormula` | DRAFT v0 (open, `OQ-wardformula`) |
+| `20-translation/22-model-translation` | Generated transition system | DRAFT v0 (open, `OQ-model-target`) |
+| `20-translation/23-faithfulness` | Bridge discipline + version pin | DRAFT v0 (realizes `OQ-classical-bridge`) |
+| `30-model-checking/31-integration` | Checker integration (Quint/Apalache/ITF) | DRAFT v0 (open) |
+| `30-model-checking/32-state-space` | `Q` assumed, `P` environment | DRAFT v0 (open) |
+| `30-model-checking/33-bounded-results` | Bound policy + honest recording | DRAFT v0 (open) |
+| `40-test-generation/41-generators-oracles` | Generators + oracles from `G` | DRAFT v0 (open) |
+| `40-test-generation/42-sampling-policy` | The measure Ken omits | DRAFT v0 (Ward-designed — open, `OQ-sampling-policy`) |
+| `40-test-generation/43-metamorphic` | Model-based + metamorphic testing | DRAFT v0 (open) |
+| `50-runtime-verification/51-monitor-synthesis` | `T` → monitor over `Σ` | DRAFT v0 (open) |
+| `50-runtime-verification/52-trace-conformance` | Code refines model? | DRAFT v0 (realizes `OQ-conformance`) |
+| `50-runtime-verification/53-agentic-envelope` | Agent as bounded `P` | DRAFT v0 (realizes `OQ-agentic-oracle`) |
 | `90-open-decisions` | Fork log | living |
 
 ## Next action
 
 Kick off the campaign: the design enclave grounds in §10 (the fixed Ken seam),
-then opens `OQ-ward-stack` (§00) and `OQ-wardformula` (§20). See
+then opens `OQ-ward-stack` (§00) and `OQ-wardformula` (§20). The scaffolded
+§20–§50 subsections are the elaboration backlog; each names its resolver OQ. See
 `docs/program/DESIGN-PROGRESS.md` for the work-package view.

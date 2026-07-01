@@ -16,9 +16,23 @@
 | OQ | Question | Where |
 |---|---|---|
 | `OQ-ward-stack` | Ward's implementation stack + top-level architecture. | §00 / campaign |
-| `OQ-wardformula` | The `WardFormula` target + the `compile` image. | §20 |
-| `OQ-model-target` | The model-translation target (Quint module / Apalache TLA+ / IR). | §20 / §30 |
+| `OQ-wardformula` | The `WardFormula` target + the `compile` image. | §20 / §21 |
+| `OQ-model-target` | The model-translation target (Quint module / Apalache TLA+ / IR). | §22 / §30 |
 | `OQ-export-wire` | Finalize the export field wire spellings, back-coordinated to ken. | §11 |
+
+## Ken-decided, realized in Ward (NOT open — do not reopen)
+
+These forks Ken already closed; Ward inherits the decision and **realizes** it in
+the named sections. Listed for traceability so an elaborator does not mistake a
+realization task for an open design fork. Any friction goes back to Ken (the seam
+is fixed input), not into a Ward re-decision.
+
+| OQ (ken) | Ken's decision (short) | Realized in |
+|---|---|---|
+| `OQ-classical-bridge` | Strictly one-way; never `proved`; sound by assume-guarantee; faithfulness Ken-checked once at compiler level + generated model + conformance + one honest assumption; trust edge = Ward version in the attestation. | §23 (+ §33/§52) |
+| `OQ-temporal` | `Temporal` is inert data (no kernel modality); stated + exported as `T`/`delegated`. | §21 (source) |
+| `OQ-conformance` | Ken emits a trace/instrumentation contract (observability in `Σ`); the checking mechanism is the downstream consumer's. | §51 / §52 |
+| `OQ-agentic-oracle` | Assuring an embedded agent = the existing seam aimed at a maximally-nondeterministic `P`; four-row status partition; no new agentic mechanism. | §53 |
 
 ## Resolution log
 

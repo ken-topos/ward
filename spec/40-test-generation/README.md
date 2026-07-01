@@ -11,10 +11,11 @@ L2 answers the **unbounded, sampled** question L1 cannot: over the real code
 Ken hands Ward everything needed to *generate and check* — the
 refinement/dependent types are simultaneously **generators** (they define the
 valid input domain) and **oracles** (they define the postcondition) — but with
-**no measure** on the domain (§11 I5). Ward's L2 contribution is threefold:
+**no measure** on the domain (§11 I5). Ward's L2 contribution is fourfold:
 derive the generators and oracles from `G`, supply the missing measure as a
-governed **sampling policy**, and cover the oracle-free (agentic) outputs by
-**metamorphic** relations.
+governed **sampling policy**, cover the oracle-free (agentic) outputs by
+**metamorphic** relations, and retain every defect found as a pinned
+**regression corpus** — the deterministic backstop under the sampled measure.
 
 - [`41-generators-oracles.md`](41-generators-oracles.md) — deriving generators
   and oracles from `G`'s support (partition, boundaries, cases),
@@ -24,3 +25,6 @@ governed **sampling policy**, and cover the oracle-free (agentic) outputs by
   exported partition). `OQ-sampling-policy`.
 - [`43-metamorphic.md`](43-metamorphic.md) — model-based generation from L1 and
   metamorphic testing where no propositional oracle exists (feeds §53).
+- [`44-regression-corpus.md`](44-regression-corpus.md) — the pinned,
+  auto-populated witnesses of every defect found: the deterministic
+  (weight-∞) counterpart to §42's measure. `OQ-regression-corpus`.

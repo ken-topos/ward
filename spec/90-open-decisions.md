@@ -19,13 +19,14 @@
 | `OQ-wardformula` | The `WardFormula` target + the `compile` image. | §20 / §21 |
 | `OQ-model-target` | The model-translation target (Quint module / Apalache TLA+ / IR). | §22 / §30 |
 | `OQ-export-wire` | Finalize the export field wire spellings, back-coordinated to ken. | §11 |
+| `OQ-regression-corpus` | The pinned-witness corpus: identity keying, replay, staleness, governance. | §44 |
 
 ## Ken-decided, realized in Ward (NOT open — do not reopen)
 
-These forks Ken already closed; Ward inherits the decision and **realizes** it in
-the named sections. Listed for traceability so an elaborator does not mistake a
-realization task for an open design fork. Any friction goes back to Ken (the seam
-is fixed input), not into a Ward re-decision.
+These forks Ken already closed; Ward inherits the decision and **realizes** it
+in the named sections. Listed for traceability so an elaborator does not mistake
+a realization task for an open design fork. Any friction goes back to Ken (the
+seam is fixed input), not into a Ward re-decision.
 
 | OQ (ken) | Ken's decision (short) | Realized in |
 |---|---|---|

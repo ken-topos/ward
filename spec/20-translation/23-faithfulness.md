@@ -13,20 +13,28 @@
 the argument that the two together are **faithful** — that a green Ward result
 about `compile φ` over the generated model is genuine evidence about `φ` over
 the real program — and the discipline that keeps that argument honest.
-Faithfulness is not one Ward proof; it is a **composition** of four parts, three
-structural and one explicitly assumed (ken `OQ-classical-bridge`):
+Faithfulness is not one Ward proof; it is a **composition** of five parts, four
+structural and one explicitly assumed (ken `OQ-classical-bridge`). The two-layer
+translation (§21/§22) splits the old "property faithfulness" into a **lossless**
+half Ken proves and a **lossy** half Ward declares:
 
-1. **Property faithfulness** — `⟦φ⟧ = ⟦compile φ⟧` over `Σ`-behaviors, proved by
-   Ken once at the compiler level (§21; ken `72 §6.3`).
-2. **No authoring drift** — the model is generated, not written, so it cannot
-   silently disagree with the code (§22; ken `71 §1`).
-3. **Trace conformance** — the *running* code stays within the model
+1. **Compile faithfulness (lossless)** — `⟦φ⟧ = ⟦compile φ⟧` over `Σ`-behaviors,
+   `compile : Temporal Σ → WardFormula` into the ideal, proved by Ken once at
+   the compiler level (§21; ken `72 §6.3`).
+2. **No authoring drift** — `WardModel` is generated, not written, so the ideal
+   model cannot silently disagree with the code (§22; ken `71 §1`).
+3. **Projection soundness (lossy, Ward-declared)** — each projection `π` from
+   the ideal (`WardFormula`/`WardModel`) to a concrete checker carries a
+   **declared fidelity** (exact / sound over- or under-approx), and Ward
+   discharges the obligation that a verdict over `π` soundly reflects the ideal;
+   a `not projectable` obligation is routed, never silently lost (§21/§22). This
+   is the new component the ideal-plus-projections design adds.
+4. **Trace conformance** — the *running* code stays within `WardModel`
    (implementation refines model), checked at runtime (§52; ken `73 §1`).
-4. **The one honest assumption** — that **Ward implements** the axiomatized
+5. **The one honest assumption** — that **Ward implements** the axiomatized
    semantics Ken's lemma is stated *relative to*. This is the single explicit,
-   version-bounded trust edge, and it is pinned — as the Ward version — in the
-   discharge attestation (§12; ken `OQ-classical-bridge`,
-   `OQ-discharge-attestation`).
+   version-bounded trust edge, pinned — as the Ward version — in the discharge
+   attestation (§12; ken `OQ-classical-bridge`, `OQ-discharge-attestation`).
 
 ## The bridge discipline Ward must honor
 

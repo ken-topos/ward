@@ -32,8 +32,8 @@ reference shelf (`local/refs/`). The subsection files are the elaboration units.
 | `10-seam/11-export-consumer` | Consuming the export IR | DRAFT v0 (anchored to ken B1) |
 | `10-seam/12-discharge-attestation` | Discharge attestation | **RATIFIED** by ken (schema + Ken contract; §13 CT method open) |
 | `10-seam/13-ct-runtime` | Runtime CT validation | **DESIGN SET** (3 mechanisms + assurance policy; `OQ-ct-assurance` residue) |
-| `20-translation/21-property-translation` | `compile → WardFormula` | DRAFT v0 (open, `OQ-wardformula`) |
-| `20-translation/22-model-translation` | Generated transition system | DRAFT v0 (open, `OQ-model-target`) |
+| `20-translation/21-property-translation` | `WardFormula` ideal + projections | **DESIGN SET** (`OQ-wardformula`) |
+| `20-translation/22-model-translation` | `WardModel` ideal + projections | **DESIGN SET** (`OQ-model-target`) |
 | `20-translation/23-faithfulness` | Bridge discipline + version pin | DRAFT v0 (realizes `OQ-classical-bridge`) |
 | `30-model-checking/31-integration` | Checker integration (Quint/Apalache/ITF) | DRAFT v0 (open) |
 | `30-model-checking/32-state-space` | `Q` assumed, `P` environment | DRAFT v0 (open) |

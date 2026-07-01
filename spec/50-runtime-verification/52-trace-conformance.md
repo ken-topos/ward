@@ -1,7 +1,7 @@
 # 52 — Trace conformance: does the code refine the model?
 
 > Status: DRAFT v0 — open design. This is the runtime half of the faithfulness
-> argument (§23, part 3): Ken guarantees the model has no authoring drift; L3
+> argument (§23, part 4): Ken guarantees the model has no authoring drift; L3
 > checks the running code stays within it. Consumes ken `73`'s trace contract
 > and the L1 model (§22/§30). Resolver: `OQ-conformance` (DECIDED in ken —
 > realized here).
@@ -33,7 +33,7 @@ diverged and *that divergence is the finding* — surfaced, not smoothed over.
   abstract (refine §22) or the code has a bug the model rules out (a real
   defect). Both are results.
 - **To §12** — a conformance verdict is a discharge: it substantiates the
-  faithfulness assumption (§23 part 4) *for the observed execution*, version-
+  faithfulness assumption (§23 part 5) *for the observed execution*, version-
   and export-hash-bound, never promoted.
 
 ## Ward design deliverables

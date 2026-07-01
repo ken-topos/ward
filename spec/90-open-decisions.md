@@ -17,8 +17,8 @@
 |---|---|---|
 | `OQ-ward-stack` | **RESOLVED** (§01, ADR 0002): two siblings (Ward + Keep), shared seam crate, Rust, orchestrator core. | §01 |
 | `OQ-deployment-seam` | The `(Ken+Ward)↔deployment` seam: discharge predicate schema + reference admission policy (gate is Ken's). | §01 |
-| `OQ-wardformula` | The `WardFormula` target + the `compile` image. | §20 / §21 |
-| `OQ-model-target` | The model-translation target (Quint module / Apalache TLA+ / IR). | §22 / §30 |
+| `OQ-wardformula` | **DESIGN SET** (§21): ideal IR + lossless `compile` + classified projections; open = the first projection's fragment map. | §20 / §21 |
+| `OQ-model-target` | **DESIGN SET** (§22): ideal `WardModel` + projections; open = confirm Quint+Apalache, the first `π` + abstraction. | §22 / §30 |
 | `OQ-export-wire` | Finalize the export field wire spellings, back-coordinated to ken. | §11 |
 | `OQ-regression-corpus` | The pinned-witness corpus: identity keying, replay, staleness, governance. | §44 |
 | `OQ-ct-assurance` | The runtime-CT validation method: mechanism tractability, platform-pin, the CT assurance policy (codegen is Ken's — coordinate back). | §13 |
@@ -107,6 +107,27 @@ version transparency:** the attestation records each tool + version +
 reproducibility status and flags what cannot be reproduced. **Consequence:**
 §50/§53 and §13's runtime face are **Keep's**, to be migrated; Keep may later
 split to its own repo.
+
+**DESIGN SET (2026-07-01, operator) — `OQ-wardformula` + `OQ-model-target`
+(§21/§22), the translation `τ`.** Two layers on both the property and the system
+side. **Ideal:** `WardFormula` (the full μ-calculus-over-`Σ`, Ward's
+denotational semantics) and `WardModel` (the faithful transition system
+generated from `Σ` + the space semantics). **Lossless in:**
+`compile : Temporal Σ → WardFormula` is an isomorphic change of representation —
+Ken proves `⟦φ⟧ = ⟦compile φ⟧` once (faithfulness lives here); the model is
+*generated*, not authored (no drift). **Lossy out:** classified **projections**
+`π` to a concrete, **replaceable** (§01) checker — fidelity ∈ {exact, sound
+over-approx, sound under-approx/bounded, not projectable} — where the checker's
+poorer language and finite-state abstraction live (fidelity lives here). The
+**μ-calculus gap** is thus recorded routing, not loss: LTL-expressible → `exact`
+(L1 fast path); true fixpoints → another checker/projection, or Keep's runtime
+monitor, or flagged — never dropped. Projection soundness is a new faithfulness
+component (§23, now five parts). This inherits §01's
+minimal-core-over-replaceable-tools split (`WardFormula`/`WardModel` and the
+lemma in the core; projections are the tool adapters). **Open (residue):** the
+pinned `⟦·⟧` (finite/ω + fixpoint interpretation, ken `72 §6.2`); confirm
+  Quint+Apalache; the **first projection** (property + model) and its fragment/
+  abstraction map; the source-spelling coordination back to ken (`72 §3.1`).
 
 **OPENED (2026-07-01) — `OQ-deployment-seam` (§01).** The third seam,
 `(Ken+Ward)↔deployment`. Signature-verification + admission-control tooling is

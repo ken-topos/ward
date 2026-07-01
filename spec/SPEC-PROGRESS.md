@@ -29,7 +29,7 @@ reference shelf (`local/refs/`). The subsection files are the elaboration units.
 |---|---|---|
 | `00-overview` | Thesis; two engines; guarantee levels; scope | DRAFT v0 (scaffold) |
 | `10-seam/11-export-consumer` | Consuming the export IR | DRAFT v0 (anchored to ken B1) |
-| `10-seam/12-discharge-attestation` | Discharge attestation | DRAFT v0 (Ward-designed — open) |
+| `10-seam/12-discharge-attestation` | Discharge attestation | **FINALIZED** (schema + Ken contract; pending ken ratify) |
 | `10-seam/13-ct-runtime` | Runtime CT validation | DRAFT v0 (Ward-designed — open) |
 | `20-translation/21-property-translation` | `compile → WardFormula` | DRAFT v0 (open, `OQ-wardformula`) |
 | `20-translation/22-model-translation` | Generated transition system | DRAFT v0 (open, `OQ-model-target`) |

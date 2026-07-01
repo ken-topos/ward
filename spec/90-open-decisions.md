@@ -8,7 +8,7 @@
 
 | OQ | Question | Where |
 |---|---|---|
-| `OQ-discharge-attestation` | The discharge-attestation shape + the runtime CT validation. | §10 (`12`, `13`) |
+| `OQ-discharge-attestation` | Schema + Ken contract **RESOLVED** (§12, see log); CT validation *method* still open. | §10 (`12`, `13`) |
 | `OQ-sampling-policy` | The per-deployment test-sampling measure + its governance. | §40 |
 
 ## Ward-internal (opened by the campaign)
@@ -39,3 +39,20 @@ seam is fixed input), not into a Ward re-decision.
 
 Append `**RESOLVED (date, by):** …` entries as forks close; never delete a
 decided OQ — keep it for the record, mirroring ken.
+
+**RESOLVED (2026-07-01, design) — `OQ-discharge-attestation`, schema + Ken
+contract (§12).** The attestation is an **in-toto predicate** over the built
+artifact (`predicateType: ward.dev/attestation/discharge/v1`), keyless-signed
+and carried in provenance on the policy-attestation ladder (ken `63 §5`,
+`65 §5`). Per-obligation outcome is Ken's four-way made total — `discharged`
+(decided) / `bounded` (depth-`k` **or** sampled coverage) / `monitored`
+(observed windows) / `failed` — with the bound recorded alongside and a rollup
+rule when engines overlap. The **Ken-visible surface** is fixed to
+`export.hash`, `export.contractVersion`, `ward.version`, each
+`obligations[].{id,field,outcome}`, and the `signature`; the gate enforces
+signature + export-hash match (= revocation) + per-obligation sufficiency
+against a **governance** requirement, and must never promote to `proved`.
+**Pending:** ken ratification of the Ken-visible spellings + the `bounded`
+widening of `bounded-to-k` (coordination items, §12). **Still open under this
+OQ:** the CT validation *method* (§13) — the attestation carries its verdict,
+but how the verdict is produced is Ward-internal and unresolved.

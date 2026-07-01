@@ -17,6 +17,7 @@ coupling is deliberately narrow (a broadcast contract, not an API) and **one-way
   invariants Ward relies on. **Consumed.**
 - [`12-discharge-attestation.md`](12-discharge-attestation.md) — the record that
   binds a classical discharge 1:1 to the export it answered, and pins the Ward
-  version. **Ward-designed** (`OQ-discharge-attestation`, Ward-blocked in Ken).
+  version. **Schema + Ken contract FINALIZED** (`OQ-discharge-attestation`,
+  pending ken ratification of the Ken-visible fields).
 - [`13-ct-runtime.md`](13-ct-runtime.md) — the runtime constant-time validation
   Ken's static `@ct` face defers to the "Ward runner." **Ward-designed.**

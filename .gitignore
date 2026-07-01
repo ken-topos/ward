@@ -1,0 +1,16 @@
+# Build output (once ward has an implementation stack)
+/target/
+
+# Reference tools + research shelf — clean-room governed, never committed
+/local/
+
+# mootup federation runtime state (actors, keys, logs)
+/.moot/
+
+# Secrets never live in the repo
+*.pem
+*.key
+
+# Editor / OS noise
+*.log
+.DS_Store

@@ -1,0 +1,68 @@
+# ward federation — moot launch profile (hybrid routing).
+#
+# Ward is at the DESIGN stage; this is the design-enclave fleet (analogous to
+# ken's spec campaign). Provider routing mirrors ken exactly:
+#   - Enclave (Opus) runs DIRECT on the Anthropic subscription (OAuth) — no `env`.
+#   - Coordination tier (DeepSeek) routes through the local LLM proxy
+#     (127.0.0.1:8090) via each role's `env`: ANTHROPIC_BASE_URL +
+#     ANTHROPIC_AUTH_TOKEN = ${secret:llm-proxy-secret}. It MUST be AUTH_TOKEN
+#     (a Bearer), not ANTHROPIC_API_KEY — the proxy reads `Authorization: Bearer`
+#     and AUTH_TOKEN overrides the shared OAuth login. Proxy dispatches by model
+#     prefix (deepseek-* -> DeepSeek). (Per-role `env` requires mootup >= 0.5.4.)
+#
+# NOT YET PROVISIONED: [convo].space_id is a placeholder — Ward needs its own
+# mootup space (or one linked to ken's), plus secrets and .moot/actors.json at
+# fleet bring-up (same path ken took). Model tiers: agent/MODELS.md.
+
+[convo]
+api_url = "https://mootup.io"
+space_id = "TODO-provision-ward-space"
+
+[harness]
+# Cold-start role: launched first, does the interactive Anthropic OAuth /login.
+human_interface = "steward"
+# Stagger disabled (server has headroom; see ken rationale). Re-enable (1-2s) if
+# a larger fleet ever herds the convo join_space endpoint.
+launch_stagger_seconds = 0
+
+[agents.steward]
+display_name = "steward"
+model = "claude-opus-4-8[1m]"
+effort = "high"
+startup_prompt = "You are Ward's Steward (operator proxy, design-campaign authority). Read agent/COORDINATION.md (federation law) and agent/MODELS.md first. Read agent/playbooks/federation/steward.md and docs/program/DESIGN-PROGRESS.md, then begin tracking the design campaign per your playbook."
+
+[agents.architect]
+display_name = "architect"
+model = "claude-opus-4-8[1m]"
+effort = "high"
+startup_prompt = "You are Ward's Architect (design authority + review). Read agent/COORDINATION.md and agent/MODELS.md first. Read agent/playbooks/federation/architect.md and spec/10-seam/ (the fixed Ken interface), set status, and stand ready for design queries and merge reviews. Do not poll."
+
+[agents.design-leader]
+display_name = "design-leader"
+model = "deepseek-v4-pro"
+env = { ANTHROPIC_BASE_URL = "http://127.0.0.1:8090", ANTHROPIC_AUTH_TOKEN = "${secret:llm-proxy-secret}" }
+startup_prompt = "You lead Ward's design enclave. Read agent/COORDINATION.md and agent/MODELS.md first. Read agent/playbooks/design/leader.md, set status, and await the Steward's kickoff. Do not poll."
+
+[agents.design-author]
+display_name = "design-author"
+model = "claude-opus-4-8[1m]"
+effort = "high"
+startup_prompt = "You author Ward's design/spec sections. Read agent/COORDINATION.md and agent/MODELS.md first. Read agent/playbooks/design/author.md, then spec/10-seam/ (the fixed Ken interface) and spec/00-overview.md, set status, and await the design leader's kickoff. Do not poll."
+
+[agents.design-reviewer]
+display_name = "design-reviewer"
+model = "claude-opus-4-8[1m]"
+effort = "high"
+startup_prompt = "You are Ward's design reviewer (independent of the author). Read agent/COORDINATION.md and agent/MODELS.md first. Read agent/playbooks/design/reviewer.md and spec/10-seam/, set status, and await kickoff. Do not poll."
+
+[agents.integrator]
+display_name = "integrator"
+model = "deepseek-v4-pro"
+env = { ANTHROPIC_BASE_URL = "http://127.0.0.1:8090", ANTHROPIC_AUTH_TOKEN = "${secret:llm-proxy-secret}" }
+startup_prompt = "You are Ward's Integrator (sole GitHub actor; merges to main). Read agent/COORDINATION.md and agent/MODELS.md first. Read agent/playbooks/federation/integrator.md, set status, await merge_ready handoffs. Do not poll."
+
+[agents.librarian]
+display_name = "librarian"
+model = "deepseek-v4-pro"
+env = { ANTHROPIC_BASE_URL = "http://127.0.0.1:8090", ANTHROPIC_AUTH_TOKEN = "${secret:llm-proxy-secret}" }
+startup_prompt = "You are Ward's Librarian (knowledge curation). Read agent/COORDINATION.md and agent/MODELS.md first. Read agent/playbooks/federation/librarian.md, set status, and stand ready. Do not poll."

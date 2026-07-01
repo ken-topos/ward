@@ -20,7 +20,7 @@
 | `OQ-model-target` | The model-translation target (Quint module / Apalache TLA+ / IR). | §22 / §30 |
 | `OQ-export-wire` | Finalize the export field wire spellings, back-coordinated to ken. | §11 |
 | `OQ-regression-corpus` | The pinned-witness corpus: identity keying, replay, staleness, governance. | §44 |
-| `OQ-ct-assurance` | The runtime-CT method: mechanism tractability, formal-tier scope, platform-pin, the CT assurance policy. | §13 |
+| `OQ-ct-assurance` | The runtime-CT validation method: mechanism tractability, platform-pin, the CT assurance policy (codegen is Ken's — coordinate back). | §13 |
 
 ## Ken-decided, realized in Ward (NOT open — do not reopen)
 
@@ -74,16 +74,18 @@ supports **three mechanisms** — statistical (dudect-style), hardware-assisted,
 and formal/binary-level (Binsec/Rel, ct-verif class) — selected per obligation
 by a user-authored **CT assurance policy** (governed like §42's sampling policy;
 the **leakage model** is a recorded policy choice that bounds every claim's
-strength). **Formal-tier scope (recommended, pending ratification):** Ward does
-**not** build a verified CT-preserving compiler; it *does* enforce **CT-aware
-codegen** (a standing `OQ-ward-stack` constraint — lower `@ct` to branchless
-primitives, preserve CT-guaranteeing IR markers across passes) and may
-**consume** an external CT-preserving backend or a **sound binary-level CT
-verifier** to reach a `discharged` outcome. **Platform binding:** a CT verdict
-is platform-relative; recommended handling folds platform into the
-build/provenance identity (no Ken-visible field), gate-visible pin as fallback.
-**Honesty:** statistical/hw → `monitored`/`bounded` (never `discharged`); formal
-sound-for-`L` → possibly `discharged`, always relative to leakage model `L` +
-platform `P`; a bare "CT: pass" is forbidden; never promoted to `Q`. **Open
-(residue):** each mechanism's tractability, ratification of the formal-tier
-scope, and the platform-pin choice.
+strength). **Formal-tier scope (operator-concurred):** no verified CT-preserving
+compiler on **either** side. **Codegen is Ken's** (its backend, likely LLVM):
+Ken preserves CT **best-effort using LLVM's existing features** (branchless
+lowering that survives passes, no secret-dependent branch/index/memory, ARM DIT
+/ x86 DOITM where available) — ken `45` / `61 §5a` / `OQ-backend-target`,
+communicated back to ken's steward. Ward's high-assurance tier is a **sound
+binary-level CT verifier** over Ken's *emitted binary*, so neither side needs a
+verified compiler — Ward's binary check catches any violation the backend
+introduced. **Platform binding:** a CT verdict is platform-relative; recommended
+handling folds platform into the build/provenance identity (no Ken-visible
+field), gate-visible pin as fallback. **Honesty:** statistical/hw →
+`monitored`/`bounded` (never `discharged`); formal sound-for-`L` → possibly
+`discharged`, always relative to leakage model `L` + platform `P`; a bare "CT:
+pass" is forbidden; never promoted to `Q`. **Open (residue):** each mechanism's
+tractability, the platform-pin choice, and the ken-side codegen coordination.

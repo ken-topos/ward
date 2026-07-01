@@ -2,13 +2,15 @@
 
 > Status: **DESIGN SET (2026-07-01)** — the CT method's shape is fixed per
 > operator direction: three measurement mechanisms under a user **assurance
-> policy**, the leakage model as a recorded policy choice, CT-aware codegen, and
-> strict outcome honesty. Residue (`OQ-ct-assurance`, the CT half spun out of
-> `OQ-discharge-attestation`): each mechanism's tractability, the exact scope of
-> the formal tier (recommended below, pending ratification), and the
-> platform-pin mechanism. Ken lands the *static* `@ct` face and defers the
-> *runtime* face to Ward (ken `spec/60-security/65-policy.md §2/§5a`, `61 §5a`,
-> `64 §4.2`).
+> policy**, the leakage model as a recorded policy choice, and strict outcome
+> honesty. The formal-tier scope is **operator-concurred** (no verified compiler
+> either side). **CT-preservation through compilation is Ken's backend**
+> (codegen is Ken's, likely LLVM), not Ward's — communicated back to ken's
+> steward. Residue (`OQ-ct-assurance`, the CT half spun out of
+> `OQ-discharge-attestation`): each mechanism's tractability, the platform-pin
+> mechanism, and the ken-side codegen coordination. Ken lands the *static* `@ct`
+> face and defers the *runtime validation* face to Ward (ken
+> `spec/60-security/65-policy.md §2/§5a`, `61 §5a`, `64 §4.2`).
 
 ## The split
 
@@ -43,18 +45,19 @@ demand a stronger tier for external endpoints than for internal ones.
 |---|---|---|---|
 | **Statistical** (dudect-style) | two input classes, test for a timing-distribution difference | cheap, always available | `monitored` / `bounded` |
 | **Hardware-assisted** | perf-counter / cycle-accurate harness | moderate; platform-specific | `monitored` / `bounded` |
-| **Formal / binary-level** | sound CT verification of the **emitted binary** under a leakage model (Binsec/Rel, ct-verif class), and/or a CT-preserving codegen path | high | may reach `discharged` |
+| **Formal / binary-level** | sound CT verification of Ken's **emitted binary** under a leakage model (Binsec/Rel, ct-verif class) | high | may reach `discharged` |
 
-## Scope of the formal tier (recommended — pending ratification)
+## Scope of the formal tier (operator-concurred, 2026-07-01)
 
-- **OUT of scope:** Ward building a **verified CT-preserving compiler** (Jasmin
-  / CompCert-CT class). That is a research-scale compiler-verification effort,
-  not Ward's mission.
-- **IN scope:** (a) **CT-aware codegen** (the codegen constraint below), and (b)
-  **consuming** an external CT-preserving backend **or** running a **sound
-  binary-level CT verifier** as the high-assurance tier. The `discharged`
-  outcome is reachable by verifying the *actual binary*, without Ward
-  re-verifying a compiler.
+- **OUT of scope for *either* side:** a **verified CT-preserving compiler**
+  built from scratch (Jasmin / CompCert-CT class). Ward does not compile at all;
+  Ken uses an existing backend (LLVM), not a bespoke verified one.
+- **Ward's high-assurance tier is a *sound binary-level CT verifier*** over
+  Ken's **emitted binary** (Binsec/Rel, ct-verif class). This is the key move:
+  because Ward verifies the *actual binary*, **neither side needs a verified
+  compiler** — Ken preserves CT best-effort (below) and Ward's binary-level
+  check catches any violation the backend introduced. The `discharged` outcome
+  comes from verifying the output, not from trusting the compiler.
 
 ## The CT assurance policy (user-facing, governed, recorded)
 
@@ -74,23 +77,34 @@ The policy's *choices* are Ward-internal detail (they ride the `ct[]` / `policy`
 fields of §12); the *outcome* they produce is the Ken-visible obligation
 `outcome`.
 
-## The codegen constraint (CT-preservation through compilation)
+## CT-preservation through compilation — **Ken's backend, not Ward's**
 
-Ken's static face is **source-level**; the compiler between source and binary
-can **destroy** constant-timeness (lower a `cmov` to a branch, introduce a
-data-dependent access). So CT support imposes a **standing constraint on Ward's
-codegen** (a requirement on `OQ-ward-stack`, not a validation-time
-afterthought):
+Ken's static `@ct` face is **source-level**; the compiler between source and
+binary can **destroy** constant-timeness (lower a branchless select to a branch,
+introduce a data-dependent access). Preserving CT through compilation is a
+**codegen** concern — and **codegen is Ken's**: Ward compiles nothing (ken owns
+the native backend, ken `40-runtime/45-native-backend`, `OQ-backend-target`;
+likely LLVM). This is a **correction of responsibility** communicated back to
+ken's steward; it is *not* an `OQ-ward-stack` deliverable.
 
-- Lower `@ct`-guarded operations to **constant-time primitives** — branchless
-  select (`cmov`), no secret-dependent branch / index / memory access.
-- **Preserve the IR features that guarantee CT across subsequent passes** —
-  carry the `@ct` marking (directly or indirectly) so a later optimization pass
-  cannot silently reintroduce a data-dependent operation the marker forbids.
+The realistic division (operator-directed):
 
-This is the "CT-preservation through compilation" half ken `64 §4.2` names; the
-three mechanisms above are how Ward *checks* it actually held on the emitted
-binary.
+- **Ken's backend preserves CT best-effort, using LLVM's *existing* features** —
+  **not** a CT-guaranteed compiler built from scratch. Concretely: lower `@ct`
+  operations to branchless primitives (`cmov` / `select`) in a form that
+  survives later passes; avoid introducing secret-dependent branches / indexing
+  / memory access; use target data-independent-timing features where available
+  (ARM DIT, x86 DOITM). "Best-effort with LLVM," not "verified." This lands on
+  ken's side (ken `45`, `61 §5a`, `OQ-backend-target`).
+- **Ward validates the emitted binary** (the three mechanisms) and records the
+  verdict. Because Ward's high-assurance tier verifies Ken's *actual binary*,
+  the loop closes **without** a verified compiler on either side: Ken
+  best-effort-preserves, Ward's binary-level check **catches any CT violation
+  the backend introduced**.
+
+This is the "CT-preservation through compilation" split ken `64 §4.2` names —
+now with the codegen half explicitly assigned to Ken and the validation half to
+Ward.
 
 ## Platform binding and the gate (resolves loose thread — platform)
 
@@ -140,10 +154,11 @@ the runner maps the former to the latter when it records the discharge.
   `dudect`, `binsec`, `jasmin` — behavior/approach only per `CLEAN-ROOM.md`).
 - **The CT assurance policy** — schema + governance, indexed over the exported
   `@ct` obligations, leakage model as a first-class recorded choice.
-- **The CT-aware codegen discipline** — carried as a requirement into
-  `OQ-ward-stack`.
 - **The platform-pin mechanism** — provenance-fold (recommended) or the
   gate-visible pin (coordinate with ken if needed).
+- **Coordinate the codegen responsibility back to ken** — CT-preservation
+  through compilation is Ken's backend (best-effort LLVM, ken `45` / `61 §5a` /
+  `OQ-backend-target`); Ward validates the result. **Not** a Ward deliverable.
 - **Emit into §12** — verdict + mechanism + leakage model + platform, tagged
   `Q@ct`, never promoted.
 - Resolver: `OQ-ct-assurance` (the CT-method residue of

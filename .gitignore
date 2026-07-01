@@ -1,8 +1,10 @@
 # Build output (once ward has an implementation stack)
 /target/
 
-# Reference tools + research shelf — clean-room governed, never committed
-/local/
+# Private drop zone + reference shelf — clean-room governed. Everything under
+# local/ is gitignored except the top-level README (mirrors ken).
+/local/*
+!/local/README.md
 
 # mootup federation runtime state (actors, keys, logs)
 /.moot/

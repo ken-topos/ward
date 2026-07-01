@@ -71,5 +71,5 @@ The bridge's *direction and soundness* are Ken's decision
 (`OQ-classical-bridge`, DECIDED); Ward does not get to promote, re-import
 classical strength into Ken, or weaken the one-way gate. Ward realizes the
 discipline and designs the artifacts that record it. Resolver: `OQ-wardformula`
-+ `OQ-model-target` (the translations this argument is stated over) and
-`OQ-discharge-attestation` (where the version pin + gap ledger land).
+and `OQ-model-target` (the translations this argument is stated over), plus
+`OQ-discharge-attestation` (where the version pin and gap ledger land).

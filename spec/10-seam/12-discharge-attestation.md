@@ -1,15 +1,17 @@
 # 12 — The discharge attestation
 
-> Status: **FINALIZED (design), pending ken ratification of the Ken-visible
-> fields.** Ken decided the artifact (ken
-> `spec/60-security/63-supply-chain.md §5a`, `OQ-discharge-attestation`) and
-> deferred the *schema + gate semantics* to Ward ("needs Ward's runner"). This
-> chapter locks Ward's side: the concrete schema, the per-obligation outcome
-> semantics, the Ken-side contract, and the lifecycle. The **CT validation
-> *method*** (§13) remains Ward-internal open; the attestation *carries* its
-> verdict, finalized here. Where a field is marked `(ratify)` the ken team
-> confirms the Ken-visible spelling, exactly as §11 handles the export wire
-> (`OQ-export-wire`).
+> Status: **RATIFIED (2026-07-01).** Ken's steward ratified both coordination
+> items (against ward `f33276b`); the Ken-visible **tokens are pinned** and Ken
+> is formalizing them into `63 §5a` via its Sec6 spec WP. Ken decided the
+> artifact (ken `spec/60-security/63-supply-chain.md §5a`,
+> `OQ-discharge-attestation`) and deferred the *schema + gate semantics* to Ward
+> ("needs Ward's runner"); this chapter is that design, now bilaterally locked:
+> the concrete schema, the per-obligation outcome semantics, the Ken-side
+> contract (including a **ratified cross-field invariant**, §Ken-side contract),
+> and the lifecycle. Because the tokens are now **bound**, a rename is a
+> breaking change (the `OQ-export-wire` stability rule). The **CT validation
+> *method*** (§13) remains the sole Ward-internal open residue; the attestation
+> *carries* its verdict.
 
 ## What it is
 
@@ -51,7 +53,7 @@ provenance verifier, so the deployment gate is a predicate check, not new
 machinery.
 
 ```jsonc
-// predicateType: "https://ward.dev/attestation/discharge/v1"   (ratify)
+// predicateType: "https://ward.dev/attestation/discharge/v1"  (pinned)
 {
   "export":  { "hash": "<content-hash of Q/P/Σ/T/G>",           // Ken-visible
                "contractVersion": "<71 contract version>" },     // Ken-visible
@@ -77,6 +79,14 @@ The `obligations[].id` is the **obligation identity over `Σ`** — the same sta
 key §44 uses for the regression corpus, so a discharge, a corpus case, and a
 future re-check all name the same obligation across export-hash changes.
 
+> **Ratified contract invariant (ken steward, 2026-07-01) — id stability.**
+> `obligations[].id` MUST be a stable function of the obligation over `Σ`,
+> **invariant across `export.hash` changes** — a discharge and a later re-check
+> name the same obligation even when the export hash moves. Ken depends on this
+> to match a discharge to its re-check, so it is a **contract obligation on
+> Ward**, not merely an implementation convenience. It is exactly the stable key
+> §44 already builds on.
+
 ## Per-obligation outcome — the four-way, made total
 
 Ken fixed four outcomes (ken `63 §5a`:
@@ -93,8 +103,10 @@ alongside so a partial result never reads as a total one:
 
 - **`bounded` generalizes Ken's `bounded-to-k`** to also cover sampled coverage
   (L2) — same category (partial evidence under a stated bound), broader source.
-  `(ratify)` — the one place Ward's label is *wider* than ken's current
-  spelling.
+  **RATIFIED (2026-07-01) as a single label**: the four-way classifies
+  *epistemic status*, not the *mechanism* that produced it, so depth-`k` vs.
+  sampled is a Ward-internal distinction — recorded in `bound`, **which Ken does
+  not read**. Not two labels.
 - **Rollup when several engines attack one obligation.** One `outcome` per
   obligation, by rule: any `failed` ⇒ `failed`; else `discharged` (decided)
   beats `bounded`/`monitored`; the individual engine results stay in
@@ -107,9 +119,9 @@ alongside so a partial result never reads as a total one:
 
 This is the hand-off. Everything else in the schema is Ward-internal.
 
-- **Ken emits** (already landed, B1): the `Q/P/Σ/T/G` export + its content-hash
-  + each `T`'s `delegated` status. The attestation consumes these; Ward adds no
-  requirement on the emitter beyond what §11 already coordinates.
+- **Ken emits** (already landed, B1): the `Q/P/Σ/T/G` export, its content-hash,
+  and each `T`'s `delegated` status. The attestation consumes these; Ward adds
+  no requirement on the emitter beyond what §11 already coordinates.
 - **Ken/the gate enforces**, at deployment, three checks and no more:
   1. **Signature valid** — keyless-verifiable, Ward-version present (ken
      `63 §5`).
@@ -127,6 +139,9 @@ This is the hand-off. Everything else in the schema is Ward-internal.
   Ken-visible surface is exactly `export.hash`, `export.contractVersion`,
   `ward.version`, each `obligations[].{id, field, outcome}`, and the `signature`
   — nothing more.
+- **Ward MUST hold** the ratified **id-stability** invariant above: an
+  `obligations[].id` names the same obligation over `Σ` across `export.hash`
+  changes. This is the one contract obligation the ratification added *on Ward*.
 
 ## Lifecycle
 
@@ -150,22 +165,36 @@ The attestation is the seam's terminus — nearly every engine chapter emits her
 relative to); §44 (regression replay → `regression`); §51/§52 (`monitored` +
 window); §53 (an agent-bearing system's four-row composition, per obligation).
 
-## Coordination items for the ken team
+## Ratification record (ken steward, 2026-07-01)
 
-1. **Ratify the Ken-visible field spellings** (marked `(ratify)`): the
-   `predicateType` URI, and `export.hash` / `export.contractVersion` /
-   `ward.version` / `obligations[].{id,field,outcome}` — the contract surface,
-   into ken `63 §5a` conformance.
-2. **Ratify `bounded` generalizing `bounded-to-k`** to subsume sampled coverage,
-   or split into two labels — the one substantive widening of ken's `§5a` text.
-3. **Own the gate *requirement* policy** (ken `64`/`65`): what each target
-   environment demands of the outcomes. Ward specifies the gate's *check*; the
-   *requirement* is governance.
+Both coordination items are **ratified**; Ken is formalizing them into `63 §5a`
+via its Sec6 spec WP (if its gate surfaces an edit, Ken sends an erratum — not a
+hold). The outcome:
+
+1. **Ken-visible field set — RATIFIED as-is.** Spellings confirmed (it is
+   exactly the surface Ken already emits, B1 `71`); `predicateType`
+   `ward.dev/attestation/discharge/v1` accepted (Ward namespace, Ward's to
+   choose); `obligations[].field` value-set `T` / `P` / `Q@ct` confirmed against
+   Ken's export channels. Ken pins **concept + value-set + cross-field
+   invariants**; the literal tokens + `predicateType` are Ward's coordinated
+   wire spelling, now **bound** (rename ⇒ breaking change). The added contract
+   term is the **id-stability invariant** (above).
+2. **`bounded` — RATIFIED as a single widened label**, bound recorded in a
+   Ward-internal field Ken does not read (see the outcome table). Not two
+   labels.
+3. **The deployment gate is Ken's** (item 3): Ken builds the three checks on its
+   existing provenance verifier; the check-(3) *requirement* is Ken governance
+   (`64`/`65`). The **CT method (§13) stays Ward-side** — Ken carries the `ct[]`
+   verdict but neither implements nor depends on it.
+
+Ken also reaffirmed the one-way gate as its own enforcement obligation (its
+conformance corpus carries a discriminating case that fails if any outcome is
+wired to raise a `T` to `Q`). Nothing there for Ward to change.
 
 ## Residue (still open)
 
 The **CT validation method** (§13) — how the runtime constant-time verdict in
 `ct[]` is actually produced — is Ward-internal and unresolved; this chapter
 finalizes only that the verdict *rides here*. Resolver for the residue:
-`OQ-discharge-attestation` remains open **for §13's method**; the **attestation
-schema + Ken contract are resolved** (see `90-open-decisions.md`).
+`OQ-discharge-attestation` remains open **for §13's method only**; the
+**attestation schema + Ken contract are ratified** (see `90-open-decisions.md`).

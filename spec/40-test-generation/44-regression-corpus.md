@@ -47,8 +47,12 @@ moved underneath them. Ward avoids this **because the seam is
 content-addressed** — but only if the corpus is keyed correctly. Keying a case
 to the *export hash* (§11) would orphan the whole corpus on every code change.
 Instead, key each case to the **obligation identity** — the `T`/`Q` entry over
-the stable `Σ` alphabet — which survives most code changes. That buys two things
-a manual suite cannot:
+the stable `Σ` alphabet — which survives most code changes. This is the same key
+§12 uses for `obligations[].id`, and its **stability across export-hash changes
+is now a ratified seam contract term** (ken steward, 2026-07-01; §12) — Ken
+depends on it to match a discharge to a re-check, so the corpus and the
+attestation share one load-bearing key, not two. That buys two things a manual
+suite cannot:
 
 - the witness replays against the **new** code (ordinary regression); and
 - an orphaned case is **machine-detectable** — when the obligation it guards is

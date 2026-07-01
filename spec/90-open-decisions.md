@@ -8,7 +8,7 @@
 
 | OQ | Question | Where |
 |---|---|---|
-| `OQ-discharge-attestation` | Schema + Ken contract **RESOLVED** (§12, see log); CT validation *method* still open. | §10 (`12`, `13`) |
+| `OQ-discharge-attestation` | Schema + Ken contract **RATIFIED** by ken (§12, see log); CT validation *method* still open. | §10 (`12`, `13`) |
 | `OQ-sampling-policy` | The per-deployment test-sampling measure + its governance. | §40 |
 
 ## Ward-internal (opened by the campaign)
@@ -52,7 +52,17 @@ rule when engines overlap. The **Ken-visible surface** is fixed to
 `obligations[].{id,field,outcome}`, and the `signature`; the gate enforces
 signature + export-hash match (= revocation) + per-obligation sufficiency
 against a **governance** requirement, and must never promote to `proved`.
-**Pending:** ken ratification of the Ken-visible spellings + the `bounded`
-widening of `bounded-to-k` (coordination items, §12). **Still open under this
-OQ:** the CT validation *method* (§13) — the attestation carries its verdict,
-but how the verdict is produced is Ward-internal and unresolved.
+
+**RATIFIED (2026-07-01, ken steward).** Both coordination items ratified against
+ward `f33276b`; tokens **pinned**, Ken formalizing into `63 §5a` via its Sec6 WP
+(erratum, not a hold, if its gate surfaces an edit). Item 1: Ken-visible field
+set accepted as-is (it is exactly Ken's B1 export surface); `predicateType`
+`ward.dev/attestation/discharge/v1` accepted as Ward-namespace. Item 2:
+`bounded` accepted as a **single** widened label, the depth-vs-sample mechanism
+kept in a Ward-internal `bound` Ken does not read. **New ratified contract
+invariant (on Ward):** `obligations[].id` is stable over `Σ` across
+`export.hash` changes — Ken relies on it to match a discharge to its re-check;
+same key §44's regression corpus uses. Tokens now bound ⇒ rename is a breaking
+change (`OQ-export-wire` stability rule). **Still open under this OQ — the CT
+validation *method* (§13) only:** the attestation carries the `ct[]` verdict,
+but how it is produced is Ward-internal and unresolved.

@@ -8,11 +8,11 @@ inheritance**, so cross-team sharing has to be deliberate.
 
 Ward is Ken's behavioral-assurance sibling (Ken ADR 0006, *one logic, two
 engines*). Ken proves the static/propositional/intuitionistic fragment of a
-topos-internal logic; Ward discharges the temporal/modal fragment of the **same**
-logic — liveness, fairness, concurrency/distribution, the environment a proof
-assumed, nondeterminism, and agentic outputs with no propositional oracle — by
-**model → test → monitor**. Ward is at the **design stage**: a design campaign,
-the analog of Ken's spec campaign.
+topos-internal logic; Ward discharges the temporal/modal fragment of the
+**same** logic — liveness, fairness, concurrency/distribution, the environment a
+proof assumed, nondeterminism, and agentic outputs with no propositional oracle
+— by **model → test → monitor**. Ward is at the **design stage**: a design
+campaign, the analog of Ken's spec campaign.
 
 ## The three tiers
 
@@ -28,15 +28,15 @@ the analog of Ken's spec campaign.
      `librarian`.
 
    There is **no `build/` tier yet.** Ward is at the design stage; when
-   implementation begins (the L1/L2/L3 engines), a `build/` archetype
-   (`leader`, `implementer`, `qa`) is added the way Ken's was.
+   implementation begins (the L1/L2/L3 engines), a `build/` archetype (`leader`,
+   `implementer`, `qa`) is added the way Ken's was.
 3. **`teams/<team>/<role>.md`** — **per-team overlays** (created when a team is
    instantiated). Thin deltas that reference the archetype and add only that
    team's specifics. Where local refinement and retros land first.
 
-`MODELS.md` records the model tier for every role (Opus 4.8 1M / DeepSeek V4 Pro)
-and the provider-routing rules. There is no build-model tier during the design
-campaign.
+`MODELS.md` records the model tier for every role (Opus 4.8 1M / DeepSeek V4
+Pro) and the provider-routing rules. There is no build-model tier during the
+design campaign.
 
 ## The Ken interface (Ward's grounding, not a prototype)
 
@@ -68,6 +68,5 @@ Ken-build-specific and SaaS/tooling specifics were dropped or re-grounded on
 Ward's design campaign. The git model will live at
 [`04-git-and-integration.md`](../docs/program/04-git-and-integration.md); roles
 map to workstreams in
-[`03-program-of-work.md`](../docs/program/03-program-of-work.md).
-</content>
+[`03-program-of-work.md`](../docs/program/03-program-of-work.md). </content>
 </invoke>

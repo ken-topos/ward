@@ -93,9 +93,11 @@ into the ideal, then two projections out of it.)
   every `π` implements, carrying its fidelity and its fragment coverage; the
   soundness obligation each `π` must discharge (verdict-over-`π` ⇒ honest claim
   about `WardFormula`); and the routing for `not projectable`.
-- **The first projection** (to the initial checker, Quint/Apalache; see
+- **The first projection** (to the confirmed checker, Quint/Apalache; see
   §22/§31): classify which `Temporal Σ` fragments it covers `exact` vs routes
-  onward.
+  onward. Behavior-confirmed shape (§33): the **LTL fragment** (`[]`/`<>`/`~>`/
+  `WF`/`SF` over `Pred Σ`, Apalache ADR-017) projects `exact`; the alternating
+  `μ`/`ν` remainder is `not projectable` to this checker and routes onward.
 - **Coordinate the source spelling back to Ken.** The `Temporal` constructor
   spelling, the `Pred Σ` atom language, the fixpoint-variable representation,
   and the ITF serialization are the **joint Ward encoding pass** ken defers

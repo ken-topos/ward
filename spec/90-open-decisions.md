@@ -18,7 +18,7 @@
 | `OQ-ward-stack` | **RESOLVED** (§01, ADR 0002): two siblings (Ward + Keep), shared seam crate, Rust, orchestrator core. | §01 |
 | `OQ-deployment-seam` | The `(Ken+Ward)↔deployment` seam: discharge predicate schema + reference admission policy (gate is Ken's). | §01 |
 | `OQ-wardformula` | **DESIGN SET** (§21): ideal IR + lossless `compile` + classified projections; open = the first projection's fragment map. | §20 / §21 |
-| `OQ-model-target` | **DESIGN SET** (§22): ideal `WardModel` + projections; open = confirm Quint+Apalache, the first `π` + abstraction. | §22 / §30 |
+| `OQ-model-target` | **ENGINE CONFIRMED** (§31/§32/§33): Quint + Apalache (three modes) + TLC; open = the first worked `π` + fragment/abstraction map, mode-selection policy. | §22 / §30 |
 | `OQ-export-wire` | Finalize the export field wire spellings, back-coordinated to ken. | §11 |
 | `OQ-regression-corpus` | The pinned-witness corpus: identity keying, replay, staleness, governance. | §44 |
 | `OQ-ct-assurance` | The runtime-CT validation method: mechanism tractability, platform-pin, the CT assurance policy (codegen is Ken's — coordinate back). | §13 |
@@ -126,8 +126,35 @@ component (§23, now five parts). This inherits §01's
 minimal-core-over-replaceable-tools split (`WardFormula`/`WardModel` and the
 lemma in the core; projections are the tool adapters). **Open (residue):** the
 pinned `⟦·⟧` (finite/ω + fixpoint interpretation, ken `72 §6.2`); confirm
-  Quint+Apalache; the **first projection** (property + model) and its fragment/
-  abstraction map; the source-spelling coordination back to ken (`72 §3.1`).
+Quint+Apalache; the **first projection** (property + model) and its fragment/
+abstraction map; the source-spelling coordination back to ken (`72 §3.1`).
+
+**ENGINE CONFIRMED (2026-07-01, operator) — `OQ-model-target` (§30:
+§31/§32/§33), the L1 engine.** **Quint + Apalache confirmed** (read for behavior
+from `local/refs/{quint,apalache,tlaplus}`, Apache-2.0). The slot is **three
+checking modes** behind one model projection (§31): **Apalache
+bounded-symbolic** (SMT/Z3, `--max-steps`; green ⇒ `bounded`, data-rich),
+**Apalache inductive-invariant** (two-query, unbounded; green ⇒ `discharged` —
+the strong path, unlocked by an assumed `Q`, §32), and **TLC explicit-state**
+(any-length, full temporal; green ⇒ decision on a *small* finite model — the
+liveness escalation). **Fragment map (§33):** the **LTL fragment**
+(`[]`/`<>`/`~>`/`WF`/`SF` over `Pred Σ`, Apalache ADR-017) projects `exact`;
+alternating `μ`/`ν` with no LTL image is `not projectable` and routes onward
+(§21). **Two honest axes kept distinct:** projection *fidelity* (expressiveness)
+vs the *bound* (depth `k`) — in-fragment `exact` still only earns `bounded`
+under symbolic depth, and only inductive / exhaustive-TLC convert it to
+`discharged`. **Q/P lowering (§32):** `Q` → assumed state constraint + candidate
+Apalache inductive invariant (never re-proved); `P` → `nondet … oneOf()` / free
+vars (symbolic Apalache keeps large `P` domains tractable); consistency guard
+flags a model that violates an assumed `Q`. **ITF (§31):** native from both
+engines (`itf-rs`, §01); finite + **lasso** shapes, `{#bigint}` ints;
+counterexamples route to §52 (conformance) and §40 (seed). **Invocation:**
+invoked, version-pinned process (Quint + Apalache + Z3 + JVM, seed,
+`--max-steps`) recorded in the attestation (§12) — the checker is classical
+trust base. **Open (residue):** the first *worked* `π` pair (model + property)
+with its concrete fragment/abstraction coverage, and the mode-selection policy
+(§33 knobs). Note: §31/§32/§33 built against Apache-2.0 refs — no originality
+scan required (that gate is copyleft-only, §00/`CLEAN-ROOM.md`).
 
 **OPENED (2026-07-01) — `OQ-deployment-seam` (§01).** The third seam,
 `(Ken+Ward)↔deployment`. Signature-verification + admission-control tooling is

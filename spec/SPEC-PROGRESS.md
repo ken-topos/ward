@@ -6,9 +6,9 @@
 ## Task
 
 Design Ward — Ken's behavioral-assurance sibling — from the Ken interface (§10,
-fixed) outward through the engines (§20–§50), producing a normative Ward spec and
-the design decisions (`docs/adr/`) behind it. Analogous to ken's spec campaign;
-run by the Ward design federation (`agent/`).
+fixed) outward through the engines (§20–§50), producing a normative Ward spec
+and the design decisions (`docs/adr/`) behind it. Analogous to ken's spec
+campaign; run by the Ward design federation (`agent/`).
 
 ## Conventions
 
@@ -35,9 +35,9 @@ reference shelf (`local/refs/`). The subsection files are the elaboration units.
 | `20-translation/21-property-translation` | `WardFormula` ideal + projections | **DESIGN SET** (`OQ-wardformula`) |
 | `20-translation/22-model-translation` | `WardModel` ideal + projections | **DESIGN SET** (`OQ-model-target`) |
 | `20-translation/23-faithfulness` | Bridge discipline + version pin | DRAFT v0 (realizes `OQ-classical-bridge`) |
-| `30-model-checking/31-integration` | Checker integration (Quint/Apalache/ITF) | DRAFT v0 (open) |
-| `30-model-checking/32-state-space` | `Q` assumed, `P` environment | DRAFT v0 (open) |
-| `30-model-checking/33-bounded-results` | Bound policy + honest recording | DRAFT v0 (open) |
+| `30-model-checking/31-integration` | Checker integration (Quint/Apalache/TLC, 3 modes, ITF) | **DESIGN SET** — engine confirmed (`OQ-model-target`) |
+| `30-model-checking/32-state-space` | `Q` assumed + inductive lever, `P` environment | **DESIGN SET** (`OQ-model-target`) |
+| `30-model-checking/33-bounded-results` | Fragment map + mode/bound recording | **DESIGN SET** (`OQ-model-target`) |
 | `40-test-generation/41-generators-oracles` | Generators + oracles from `G` | DRAFT v0 (open) |
 | `40-test-generation/42-sampling-policy` | The measure Ken omits | DRAFT v0 (Ward-designed — open, `OQ-sampling-policy`) |
 | `40-test-generation/43-metamorphic` | Model-based + metamorphic testing | DRAFT v0 (open) |

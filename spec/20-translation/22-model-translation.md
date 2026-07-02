@@ -82,10 +82,12 @@ fidelity cost if it cannot. (Assume-guarantee decomposition, §32, is likewise a
   and its declared fidelity + soundness obligation — the same typed interface as
   §21's property projections, so L1 pairs a model projection with a property
   projection of compatible fidelity.
-- **The first model target** (`OQ-model-target`). Confirm **Quint + Apalache**
-  (typed, effect-aware, SMT-symbolic, ITF-native — the most Ken-congruent slot,
-  §30/§31) against `local/refs/{quint,apalache,tlaplus}` (approach only), or
-  record the alternative; supply the first `π` and its fidelity.
+- **The first model target** (`OQ-model-target`). **Confirmed: Quint +
+  Apalache** (typed, effect-aware, SMT-symbolic, ITF-native — the most
+  Ken-congruent slot; TLC as the explicit-state escalation, §30/§31), read for
+  behavior from `local/refs/{quint,apalache,tlaplus}`. A `WardModel` projects to
+  a Quint module (state vars, `init`/`step`, `val` invariants); supply the first
+  `π` and its fidelity.
 
 ## Faithfulness, reduced
 

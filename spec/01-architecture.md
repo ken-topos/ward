@@ -36,9 +36,10 @@ one crate both depend on and neither re-implements:
 - the discharge-attestation library + the obligation-identity key (§12, §44),
 - the metamorphic-relation surface (§43) that Keep's envelope (§53) reuses.
 
-Ward and Keep are thin tools over this crate. (Keep may later split to its own
-repository; for now its spec lives here as "the runtime sibling," and §50 / §53
-/ the runtime face of §13 are **Keep's** territory, to be migrated.)
+Ward and Keep are thin tools over this crate. (Keep **has now split to its own
+repository**, `ken-topos/keep` — Keep ADR 0001, 2026-07-02: §50, §53, and the
+runtime face of §13 (as keep §54) migrated there; Ward's §50 is a pointer. The
+seam and translation stay normative here, referenced by Keep.)
 
 ## Substrate — Rust now, Ken later
 

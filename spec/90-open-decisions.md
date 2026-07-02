@@ -105,8 +105,9 @@ processes** (never linked — also keeps copyleft tools out of the MIT core);
 orchestrated tools are **clean-room-replaceable**, not permanent deps. **Honest
 version transparency:** the attestation records each tool + version +
 reproducibility status and flags what cannot be reproduced. **Consequence:**
-§50/§53 and §13's runtime face are **Keep's**, to be migrated; Keep may later
-split to its own repo.
+§50/§53 and §13's runtime face are **Keep's**; **migrated 2026-07-02** to the
+`ken-topos/keep` repo (Keep ADR 0001) — Ward's §50 is now a pointer, §13's
+runtime face is keep §54, and the offline CT verifier stays in Ward §13.
 
 **DESIGN SET (2026-07-01, operator) — `OQ-wardformula` + `OQ-model-target`
 (§21/§22), the translation `τ`.** Two layers on both the property and the system

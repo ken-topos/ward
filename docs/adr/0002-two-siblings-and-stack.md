@@ -44,7 +44,9 @@ runtime/production monitoring — with different constraints and lifetimes.
 ## Consequences
 
 - The Ward spec's §50, §53, and the runtime face of §13 are **Keep's**
-  territory, to be migrated; Keep may later split to its own repository.
+  territory. **Migrated 2026-07-02** to the `ken-topos/keep` repository (Keep
+  ADR 0001): §50/§53 moved, §13's runtime face became keep §54, Ward's §50 is a
+  pointer; the seam/translation stay normative in Ward.
 - The attestation's credibility is bounded by an explicit, minimal trusted core,
   with the large evidence-producing toolbox held at arm's length.
 - A new seam (`OQ-deployment-seam`) is opened; the gate itself stays Ken's

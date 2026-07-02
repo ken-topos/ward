@@ -1,26 +1,34 @@
-# 50 — L3: runtime verification, trace conformance, agentic envelope
+# 50 — L3: runtime verification — MIGRATED TO KEEP
 
-> Status: DRAFT v0 — open design. The third engine (§30–§50), and the one that
-> touches the **running** system. It consumes the seam's `T` and `Σ` (§10), the
-> trace/instrumentation contract Ken emits (ken `73`), and the L1 model (§30);
-> it feeds the discharge attestation (§12). References:
-> `local/refs/{rv-monitor, spot}` (spot is ⚠ GPL — read for approach only,
-> `CLEAN-ROOM.md`).
+> Status: **MIGRATED (2026-07-02).** L3 runtime verification is **Keep's**, the
+> runtime sibling (Ward ADR 0002 → Keep ADR 0001). Its normative spec now lives
+> in `ken-topos/keep` `spec/50-runtime-verification/`. This pointer remains so
+> Ward's §5x cross-references resolve and the family's decade numbering stays
+> intact.
 
-L1 checks a model and L2 samples the code offline; L3 watches the **deployed
-system** and answers the questions only runtime can: does the live execution
-stay within the verified model, and does an embedded agent stay inside its
-verified envelope? Ward is careful about what "watch" buys — a green monitor
-window is evidence for a `delegated` obligation, never a proof (§23, the one-way
-gate) — but within that honesty it is what makes liveness, ordering, and agentic
-safety *observable in production*, in the model's own vocabulary.
+## Why this is a pointer
 
-- [`51-monitor-synthesis.md`](51-monitor-synthesis.md) — monitors from `T` (LTL
-  → Büchi, MOP-style) over `Σ`, and the instrumentation contract that couples to
-  ken `73`.
-- [`52-trace-conformance.md`](52-trace-conformance.md) — does the running
-  implementation **refine** the L1 model? Closes the loop to §30 and keeps the
-  generated model honest against reality.
-- [`53-agentic-envelope.md`](53-agentic-envelope.md) — the embedded agent as a
-  nondeterministic oracle inside a verified FSM; safety-not-quality; realizes
-  ken's four-row status partition. `OQ-agentic-oracle`.
+Ward owns the **offline** engines (§30 L1, §40 L2) and emits the attestation;
+Keep owns the **runtime** engine (§50) and contributes runtime verdicts. Ward
+ADR 0002 recorded that §50, §53, and the runtime face of §13 were "Keep's
+territory, to be migrated"; Keep ADR 0001 completed that migration. The chapters
+below now live in the Keep repository:
+
+- **§51 monitor synthesis** — monitors from `T` (LTL → Büchi, MOP-style) over
+  `Σ`, and the instrumentation contract (ken `73`). → keep `spec/50/51`.
+- **§52 trace conformance** — does the running implementation refine Ward's L1
+  model (§22/§30)? The runtime half of faithfulness (§23, part 4). → keep
+  `spec/50/52`.
+- **§53 agentic envelope** — the embedded agent as a maximally-nondeterministic
+  `P` inside a verified FSM; safety-not-quality; `OQ-agentic-oracle`. → keep
+  `spec/50/53`.
+- **§54 runtime timing** — the runtime face of the CT method (§13); the offline
+  binary-level verifier stays here in §13. → keep `spec/50/54`.
+
+## What stays in Ward
+
+Ward keeps the **shared seam** these chapters consume (§10, §20), the **L1
+model** §52 checks against (§30), the **metamorphic surface** §53 reuses (§43),
+the **discharge attestation** every runtime verdict contributes to (§12), and
+the **offline** CT verifier + the shared CT method (§13). References to §51–§54
+elsewhere in this spec point at Keep's chapters under the shared numbering.

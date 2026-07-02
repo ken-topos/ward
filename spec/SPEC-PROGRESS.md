@@ -42,9 +42,7 @@ reference shelf (`local/refs/`). The subsection files are the elaboration units.
 | `40-test-generation/42-sampling-policy` | The measure Ken omits | DRAFT v0 (Ward-designed — open, `OQ-sampling-policy`) |
 | `40-test-generation/43-metamorphic` | Model-based + metamorphic testing | DRAFT v0 (open) |
 | `40-test-generation/44-regression-corpus` | Pinned witnesses of every defect | DRAFT v0 (open, `OQ-regression-corpus`) |
-| `50-runtime-verification/51-monitor-synthesis` | `T` → monitor over `Σ` | DRAFT v0 (open) |
-| `50-runtime-verification/52-trace-conformance` | Code refines model? | DRAFT v0 (realizes `OQ-conformance`) |
-| `50-runtime-verification/53-agentic-envelope` | Agent as bounded `P` | DRAFT v0 (realizes `OQ-agentic-oracle`) |
+| `50-runtime-verification/` | **L3 — MIGRATED to `ken-topos/keep`** (Keep ADR 0001, 2026-07-02); Ward keeps a pointer README | MIGRATED |
 | `90-open-decisions` | Fork log | living |
 
 ## Next action
